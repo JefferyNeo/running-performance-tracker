@@ -1,20 +1,29 @@
 SELECT 
 
-CASE left current.state.reported.tag  
-WHEN "b'\x02070090C61342\x03'"
-THEN 'Mr Lee' 
-WHEN 'work'
-THEN 'on' 
-ELSE 'No Tag' END
-as tag
-,current.state.reported.timestamp as timestamp
+"98765432"
+    as phone,
 
-,current.state.reported.temperature as temperature
+CONCAT(
+    'Hello ' + current.state.reported.tag,
+    CONCAT(
+        ', temp: ' + current.state.reported.temperature,
+        CONCAT(
+            ', humid: ' + current.state.reported.humidity,
+            ' @ ' + current.state.reported.timestamp
+    )))
+    as message,
 
-,current.state.reported.humidity as humidity
+current.state.reported.tag
+    as tag,
 
-FROM '$aws/things/g47pi/shadow/update/documents'
+current.state.reported.timestamp 
+    as timestamp,
 
-WHERE
-    previous.state.reported.tag <>
-    current.state.reported.tag
+current.state.reported.temperature 
+    as temperature,
+
+current.state.reported.humidity 
+    as humidity 
+
+FROM 
+    '$aws/things/g47tag/shadow/update/documents'
