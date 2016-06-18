@@ -1,0 +1,20 @@
+SELECT 
+
+CASE left current.state.reported.tag  
+WHEN "b'\x02070090C61342\x03'"
+THEN 'Mr Lee' 
+WHEN 'work'
+THEN 'on' 
+ELSE 'No Tag' END
+as tag
+,current.state.reported.timestamp as timestamp
+
+,current.state.reported.temperature as temperature
+
+,current.state.reported.humidity as humidity
+
+FROM '$aws/things/g47pi/shadow/update/documents'
+
+WHERE
+    previous.state.reported.tag <>
+    current.state.reported.tag
