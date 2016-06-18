@@ -1,0 +1,29 @@
+SELECT 
+
+"98765432"
+    as phone,
+
+CONCAT(
+    'Hello ' + current.state.reported.tag,
+    CONCAT(
+        ', temp: ' + current.state.reported.temperature,
+        CONCAT(
+            ', humid: ' + current.state.reported.humidity,
+            ' @ ' + current.state.reported.timestamp
+    )))
+    as message,
+
+current.state.reported.tag
+    as tag,
+
+current.state.reported.timestamp 
+    as timestamp,
+
+current.state.reported.temperature 
+    as temperature,
+
+current.state.reported.humidity 
+    as humidity 
+
+FROM 
+    '$aws/things/g47tag/shadow/update/documents'
